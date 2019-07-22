@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModel="clr-namespace:EPYSLAPPS.ViewModels.Security"
+    xmlns:control="clr-namespace:EPYSLAPPS.Controls"
+    xmlns:converter="clr-namespace:EPYSLAPPS.Converters"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    x:Class="EPYSLAPPS.Views.Security.EmailEntry">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:ErrorValidationColorConverter x:Key="errorValidationColorConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <StackLayout>
+            <border:SfBorder 
+                Style="{DynamicResource SfBorderStyle}" 
+                BorderColor="{Binding Source={x:Reference emailEntry}, Path=IsFocused, Converter={StaticResource errorValidationColorConverter}, ConverterParameter={x:Reference emailEntry}}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <control:BorderlessEntry
+                        x:Name="emailEntry" 
+                        Text="{Binding Email}" 
+                        Placeholder="Email"
+                        Style="{StaticResource EntryStyle}" />
+
+                    <Label
+                        x:Name="warningImage" 
+                        IsVisible="{Binding IsInvalidEmail}"
+                        Text="&#xe707;" 
+                        TextColor="{DynamicResource ErrorColor}"
+                        FontSize="22"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="EndAndExpand"
+                        HorizontalTextAlignment="End" 
+                        Margin="15, 0" >
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String" 
+                                                    Android="UIFontIcons.ttf#UIFonticons" 
+                                                    iOS="UIFonticons"
+                                                    WinPhone="Assets/UIFontIcons.ttf#UIFonticons"/>
+                        </Label.FontFamily>
+                    </Label>
+
+                </Grid>
+            </border:SfBorder>
+
+            <Label
+                x:Name="validationLabel" 
+                IsVisible="{Binding IsInvalidEmail}" 
+                VerticalOptions="FillAndExpand"
+                TextColor="{DynamicResource ErrorColor}" 
+                Text="Please enter the valid e-mail" 
+                Margin="15, -5, 0, 0" 
+                FontSize="12"/>
+
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
